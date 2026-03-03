@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+
+  notes     Note[]
+  reactions Reaction[]
+
+  createdAt DateTime @default(now())
+}
+
+model Professor {
+  id         String  @id @default(uuid())
+  name       String
+  department String
+
+  classes    Class[]
+}
+model Subject {
+  id      String  @id @default(uuid())
+  name    String
+  code    String
+
+  classes Class[]
+}
+model Class {
+  id          String    @id @default(uuid())
+
+  professor   Professor @relation(fields: [professorId], references: [id])
+  professorId String
+
+  subject     Subject   @relation(fields: [subjectId], references: [id])
+  subjectId   String
+
+  semester    String
+  group       String
+
+  notes       Note[]
+}
+model Note {
+  id             String   @id @default(uuid())
+
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String
+
+  class          Class    @relation(fields: [classId], references: [id])
+  classId        String
+
+  difficulty     Int
+  recommendation Boolean
+  comment        String   @db.VarChar(200)
+
+  reactions      Reaction[]
+
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, classId])
+}
+model Reaction {
+  id      String @id @default(uuid())
+
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+
+  note    Note   @relation(fields: [noteId], references: [id])
+  noteId  String
+
+  type    ReactionType
+
+  @@unique([userId, noteId])
+}
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum ReactionType {
+  USEFUL
+  NOT_USEFUL
+}

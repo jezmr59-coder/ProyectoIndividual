@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0806;
+  --surface: #110e0b;
+  --surface2: #1a1410;
+  --surface3: #221a12;
+  --border: #3a2e1e;
+  --border-dim: #221a12;
+  --gold: #c8960c;
+  --gold-dim: #7a5a0a;
+  --gold-pale: #e8c87a;
+  --red: #8b1a1a;
+  --red-bright: #c0392b;
+  --text: #d4c5a9;
+  --text-dim: #7a6a52;
+  --text-muted: #3d3325;
+  --green: #2d5a27;
+  --green-bright: #4a8a40;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Crimson Text', serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(200,150,12,0.04) 0%, transparent 60%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8960c' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: 'Crimson Text', serif; cursor: pointer; }
+input, select, textarea { font-family: 'Crimson Text', serif; }
+#root { min-height: 100vh; }

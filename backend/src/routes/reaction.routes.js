@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { toggle, myReactions } from "../controllers/Reaction.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+
+const router = Router();
+
+router.post("/", authMiddleware, toggle);
+router.get("/my", authMiddleware, myReactions);
+
+export default router;
