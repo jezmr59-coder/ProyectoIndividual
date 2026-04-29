@@ -1,4 +1,4 @@
-import { registerSchema, loginSchema } from "../Dtos/Auth.dto.js";
+import { registerSchema, loginSchema } from "../Dtos/auth.dto.js";
 import { registerUser, loginUser, getMe } from "../services/auth.service.js";
 
 export const register = async (req, res, next) => {

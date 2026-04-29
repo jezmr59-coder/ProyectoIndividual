@@ -5,7 +5,7 @@ import {
   createNewSubject,
   updateExistingSubject,
   removeExistingSubject,
-} from "../controllers/Subject.controller.js";
+} from "../controllers/subject.controller.js";
 import { authMiddleware, adminMiddleware } from "../middleware/auth.middleware.js";
 
 const router = Router();

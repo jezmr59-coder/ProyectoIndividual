@@ -1,4 +1,4 @@
-import { createSubjectSchema, updateSubjectSchema } from "../Dtos/Subject.dto.js";
+import { createSubjectSchema, updateSubjectSchema } from "../Dtos/subject.dto.js";
 import {
   getAllSubjects,
   getSubjectById,

@@ -1,4 +1,4 @@
-import { createClassSchema } from "../Dtos/Class.dto.js";
+import { createClassSchema } from "../Dtos/class.dto.js";
 import {
   getAllClasses,
   getClassById,
