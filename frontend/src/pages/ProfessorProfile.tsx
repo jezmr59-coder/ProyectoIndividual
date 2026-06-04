@@ -7,8 +7,8 @@ import { professorApi } from "../api/professor.api"; // API de profesores
 import { authApi } from "../api/auth.api"; // API de autenticación
 import type { Professor, ClassSummary } from "../api/types"; // Tipos importados
 
-function Flames({ value }: { value: number | null }) {
-  if (value === null) return <span style={{ color: "var(--text-muted)" }}>—</span>; // Si no hay valor, muestra un guión
+function Flames({ value }: { value: number | null | undefined }) {
+  if (value === null || value === undefined) return <span style={{ color: "var(--text-muted)" }}>—</span>; // Si no hay valor, muestra un guión
   return (
     <span title={`Dificultad ${value.toFixed(1)}/5`}>
       {Array.from({ length: 5 }, (_, i) => (
@@ -20,8 +20,8 @@ function Flames({ value }: { value: number | null }) {
   );
 }
 
-function Badge({ pct }: { pct: number | null }) {
-  if (pct === null) return <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>Sin reseñas</span>;
+function Badge({ pct }: { pct: number | null | undefined }) {
+  if (pct === null || pct === undefined) return <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>Sin reseñas</span>;
   const good = pct >= 60; // Determina si la recomendación es buena
   return (
     <span style={{ color: good ? "var(--green-bright)" : "var(--red-bright)", fontFamily: "'Cinzel',serif", fontSize: "0.65rem", letterSpacing: "0.05em", textTransform: "uppercase" }}>
