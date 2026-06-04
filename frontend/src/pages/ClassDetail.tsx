@@ -281,8 +281,8 @@ export default function ClassDetailPage() {
         .nf-flames { display:flex; gap:0.4rem; }
         .flame-btn { background:transparent; border:1px solid var(--border); color:var(--text-muted); font-size:0.9rem; padding:0.45rem 0.6rem; cursor:pointer; }
         .flame-btn.on { border-color:var(--gold); color:var(--gold); }
-        .nf-toggle { display:flex; gap:0.5rem; }
-        .toggle-btn { flex:1; border:1px solid var(--border); background:transparent; color:var(--text-muted); padding:0.6rem 0.9rem; cursor:pointer; }
+        .nf-toggle { display:flex; gap:0.5rem; flex-wrap:wrap; }
+        .toggle-btn { flex:1 1 140px; min-width:0; border:1px solid var(--border); background:transparent; color:var(--text-muted); padding:0.6rem 0.9rem; cursor:pointer; }
         .toggle-btn.active-good { border-color:var(--gold); color:var(--gold); }
         .toggle-btn.active-bad { border-color:var(--red-bright); color:var(--red-bright); }
         .nf-textarea { width:100%; min-height:100px; border:1px solid var(--border); background:var(--bg); color:var(--text); padding:0.75rem; resize:vertical; }
