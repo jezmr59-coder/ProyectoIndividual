@@ -5,7 +5,7 @@ import {
   createNewNote,
   updateExistingNote,
   removeExistingNote,
-} from "../controllers/Note.controller.js";
+} from "../controllers/note.controller.js";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = Router();

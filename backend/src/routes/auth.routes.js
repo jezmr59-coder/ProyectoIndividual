@@ -1,6 +1,6 @@
 ﻿// src/routes/auth.routes.js
 import { Router } from "express"; // Importa Router de Express
-import { register, login, me } from "../controllers/Auth.controller.js"; // Importa los controladores de auth
+import { register, login, me } from "../controllers/auth.controller.js"; // Importa los controladores de auth
 import { authMiddleware } from "../middleware/auth.middleware.js"; // Importa middleware de autenticación
 
 const router = Router(); // Crea un nuevo router

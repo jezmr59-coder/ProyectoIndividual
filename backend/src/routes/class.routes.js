@@ -6,7 +6,7 @@ import {
   getAvailableSemesters,
   createNewClass,
   removeExistingClass,
-} from "../controllers/Class.controller.js";
+} from "../controllers/class.controller.js";
 import { authMiddleware, adminMiddleware } from "../middleware/auth.middleware.js";
 
 const router = Router();
