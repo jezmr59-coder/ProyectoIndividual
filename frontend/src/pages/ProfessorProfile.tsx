@@ -132,13 +132,13 @@ export default function ProfessorProfile() {
         .review-btn:hover { background:var(--gold-dim); }
 
         .review-form { margin-top:1.5rem; }
-        .form-group { margin-bottom:1rem; }
+        .form-group { margin-bottom:1rem; min-width:0; }
         .form-label { display:block; font-family:"Cinzel",serif; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; }
         .form-select, .form-textarea { width:100%; background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:"Crimson Text",serif; font-size:1rem; padding:0.6rem; outline:none; }
         .form-select:focus, .form-textarea:focus { border-color:var(--gold-dim); }
         .form-textarea { resize:vertical; min-height:100px; }
-        .form-row { display:flex; gap:1rem; }
-        .form-row .form-group { flex:1; }
+        .form-row { display:flex; flex-wrap:wrap; gap:1rem; }
+        .form-row .form-group { flex:1 1 220px; min-width:0; }
         .form-actions { margin-top:1.5rem; display:flex; gap:1rem; justify-content:flex-end; }
         .cancel-btn { font-family:"Cinzel",serif; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 1rem; border:1px solid var(--border); background:transparent; color:var(--text-dim); cursor:pointer; }
         .cancel-btn:hover { border-color:var(--gold-dim); color:var(--gold); }
