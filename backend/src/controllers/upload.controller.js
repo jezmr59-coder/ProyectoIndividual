@@ -1,5 +1,5 @@
 // src/controllers/upload.controller.js
-import { createUploadSchema } from "../Dtos/upload.dto.js";
+import { createUploadSchema } from "../dtos/upload.dto.js";
 import { getAllUploads, createUpload } from "../services/upload.service.js";
 
 export const listUploads = async (req, res, next) => {

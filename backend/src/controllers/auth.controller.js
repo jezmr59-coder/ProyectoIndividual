@@ -1,5 +1,5 @@
 ﻿// src/controllers/Auth.controller.js
-import { registerSchema, loginSchema } from "../Dtos/auth.dto.js"; // Importa esquemas de validación
+import { registerSchema, loginSchema } from "../dtos/auth.dto.js"; // Importa esquemas de validación
 import { registerUser, loginUser, getMe } from "../services/auth.service.js"; // Importa servicios de auth
 
 export const register = async (req, res, next) => {

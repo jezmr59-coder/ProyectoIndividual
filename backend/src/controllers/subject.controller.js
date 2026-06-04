@@ -1,5 +1,5 @@
 // src/controllers/Subject.controller.js
-import { createSubjectSchema, updateSubjectSchema } from "../Dtos/subject.dto.js";
+import { createSubjectSchema, updateSubjectSchema } from "../dtos/subject.dto.js";
 import {
   getAllSubjects,
   getSubjectById,

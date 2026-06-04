@@ -1,5 +1,5 @@
 // src/controllers/Class.controller.js
-import { createClassSchema } from "../Dtos/class.dto.js";
+import { createClassSchema } from "../dtos/class.dto.js";
 import {
   getAllClasses,
   getClassById,

@@ -1,7 +1,7 @@
 // src/controllers/professor.controller.js
-import { createProfessorSchema, updateProfessorSchema } from "../Dtos/professor.dto.js";
+import { createProfessorSchema, updateProfessorSchema } from "../dtos/professor.dto.js";
 import { createReviewForProfessor } from "../services/professor.service.js";
-import { createReviewSchema } from "../Dtos/professor.dto.js";
+import { createReviewSchema } from "../dtos/professor.dto.js";
 
 
 import {

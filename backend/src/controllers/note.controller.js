@@ -1,5 +1,5 @@
 // src/controllers/Note.controller.js
-import { createNoteSchema, updateNoteSchema } from "../Dtos/note.dto.js";
+import { createNoteSchema, updateNoteSchema } from "../dtos/note.dto.js";
 import {
   getNotesByClass,
   createNote,
