@@ -24,7 +24,11 @@ function Badge({ pct }: { pct: number | null }) {
   const good = pct >= 60; // Determina si el profesor es recomendado
   return (
     <span style={{ color: good ? "var(--green-bright)" : "var(--red-bright)", fontFamily: "'Cinzel',serif", fontSize: "0.65rem", letterSpacing: "0.05em", textTransform: "uppercase" }}>
-      {good ? "⚔ Recomendado" : "☠ Evitar"} <em style={{ fontStyle: "normal", opacity: 0.7 }}>{pct.toFixed(0)}%</em>
+      {good ? (
+        <>⚔ Recomendado <em style={{ fontStyle: "normal", opacity: 0.7 }}>{pct.toFixed(0)}%</em></>
+      ) : (
+        <>{pct.toFixed(0)}% recomendado</>
+      )}
     </span>
   );
 }

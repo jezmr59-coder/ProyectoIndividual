@@ -24,7 +24,11 @@ function Badge({ pct }: { pct: number | null }) {
   const good = pct >= 60;
   return (
     <span style={{ color: good ? "var(--green-bright)" : "var(--red-bright)", fontFamily: "'Cinzel',serif", fontSize: "0.75rem", letterSpacing: "0.05em", textTransform: "uppercase" }}>
-      {good ? "⚔ Recomendado" : "☠ Evitar"} <em style={{ fontStyle: "normal", opacity: 0.7 }}>{pct.toFixed(0)}%</em>
+      {good ? (
+        <>⚔ Recomendado <em style={{ fontStyle: "normal", opacity: 0.7 }}>{pct.toFixed(0)}%</em></>
+      ) : (
+        <>{pct.toFixed(0)}% recomendado</>
+      )}
     </span>
   );
 }
@@ -278,8 +282,8 @@ export default function ClassDetailPage() {
         .nf-row { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; align-items:flex-start; }
         .nf-field { flex:1; min-width:140px; display:flex; flex-direction:column; gap:0.45rem; align-items:flex-start; }
         .nf-label { font-family:"Cinzel",serif; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); }
-        .nf-flames { display:flex; gap:0.4rem; align-items:center; }
-        .flame-btn { background:transparent; border:1px solid var(--border); color:var(--text-muted); font-size:0.9rem; padding:0.25rem 0.45rem; line-height:1; height:auto; min-width:34px; cursor:pointer; }
+        .nf-flames { display:flex; gap:0.25rem; align-items:center; }
+        .flame-btn { background:transparent; border:1px solid var(--border); color:var(--text-muted); font-size:0.75rem; padding:0.12rem 0.28rem; line-height:1; height:auto; min-width:24px; width:auto; cursor:pointer; border-radius:4px; }
         .flame-btn.on { border-color:var(--gold); color:var(--gold); }
         .nf-toggle { display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; }
         .toggle-btn { flex:0 0 auto; max-width:160px; border:1px solid var(--border); background:transparent; color:var(--text-muted); padding:0.45rem 0.8rem; cursor:pointer; white-space:nowrap; }
