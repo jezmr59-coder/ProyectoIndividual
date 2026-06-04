@@ -2,14 +2,22 @@
 import { Router } from "express";
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 import { authMiddleware } from "../middleware/auth.middleware.js";
 import { listUploads, createNewUpload } from "../controllers/upload.controller.js";
 
 const router = Router();
 const uploadsDir = path.resolve("uploads");
 
+// Asegura que el directorio de uploads existe
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
-  destination: uploadsDir,
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir);
+  },
   filename: (req, file, cb) => {
     const suffix = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
     const ext = path.extname(file.originalname).toLowerCase();
