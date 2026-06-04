@@ -1,3 +1,5 @@
+// src/api/note.api.ts
+// Funciones para manejar las notas de clase: listarlas, crearlas, actualizarlas y eliminarlas.
 import { client } from "./client";
 import type { Note } from "./types";
 

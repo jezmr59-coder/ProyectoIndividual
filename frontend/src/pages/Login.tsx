@@ -1,25 +1,27 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { authApi } from "../api/auth.api";
+﻿// src/pages/Login.tsx
+// Página de inicio de sesión que gestiona el envío de credenciales al backend.
+import { useState } from "react"; // Importa useState para manejar estado local
+import { useNavigate, Link } from "react-router-dom"; // Importa navegación y enlaces
+import { authApi } from "../api/auth.api"; // Importa API de autenticación
 
 export default function Login() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Hook para redirigir rutas
+  const [email, setEmail] = useState(""); // Estado para correo
+  const [password, setPassword] = useState(""); // Estado para contraseña
+  const [error, setError] = useState<string | null>(null); // Estado para mensajes de error
+  const [loading, setLoading] = useState(false); // Estado para mostrar carga
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+    e.preventDefault(); // Evita recarga de página al enviar formulario
+    setError(null); // Limpia errores previos
+    setLoading(true); // Activa indicador de carga
     try {
-      await authApi.login(email, password);
-      navigate("/dashboard");
+      await authApi.login(email, password); // Llama a la API de login
+      navigate("/dashboard"); // Redirige al dashboard si el login es correcto
     } catch (err: any) {
-      setError(err.message ?? "Error al iniciar sesion");
+      setError(err.message ?? "Error al iniciar sesion"); // Muestra el mensaje de error
     } finally {
-      setLoading(false);
+      setLoading(false); // Desactiva la carga
     }
   };
 

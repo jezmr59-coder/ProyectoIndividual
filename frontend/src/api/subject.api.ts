@@ -1,3 +1,5 @@
+// src/api/subject.api.ts
+// Llamadas para obtener materias y detalles de una materia.
 import { client } from "./client";
 import type { Subject } from "./types";
 

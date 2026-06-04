@@ -1,3 +1,4 @@
+// src/services/subject.service.js
 import prisma from "../config/prisma.js";
 
 export const getAllSubjects = async ({ search } = {}) => {

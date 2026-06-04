@@ -1,3 +1,4 @@
+// src/services/note.service.js
 import prisma from "../config/prisma.js";
 
 export const getNotesByClass = async (classId) => {

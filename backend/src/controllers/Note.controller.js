@@ -1,3 +1,4 @@
+// src/controllers/Note.controller.js
 import { createNoteSchema, updateNoteSchema } from "../Dtos/Note.dto.js";
 import {
   getNotesByClass,

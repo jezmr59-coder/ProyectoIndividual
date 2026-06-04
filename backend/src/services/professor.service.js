@@ -1,4 +1,5 @@
-import prisma from "../config/prisma.js";
+﻿// src/services/professor.service.js
+import prisma from "../config/prisma.js"; // Importa el cliente Prisma
 
 export const getAllProfessors = async ({ search, department } = {}) => {
   const professors = await prisma.professor.findMany({
@@ -16,11 +17,12 @@ export const getAllProfessors = async ({ search, department } = {}) => {
   });
 
   return professors.map((prof) => {
-    const allNotes = prof.classes.flatMap((c) => c.notes);
+    const allNotes = prof.classes.flatMap((c) => c.notes); // Aplana todas las notas de las clases del profesor
     return {
       id: prof.id,
       name: prof.name,
       department: prof.department,
+      description: prof.description,
       totalReviews: allNotes.length,
       avgDifficulty: allNotes.length
         ? allNotes.reduce((acc, n) => acc + n.difficulty, 0) / allNotes.length
@@ -53,7 +55,7 @@ export const getProfessorById = async (id) => {
 
   if (!professor) return null;
 
-  const allNotes = professor.classes.flatMap((c) => c.notes);
+  const allNotes = professor.classes.flatMap((c) => c.notes); // Todos los comentarios de las clases
   return {
     ...professor,
     stats: {
@@ -68,14 +70,29 @@ export const getProfessorById = async (id) => {
   };
 };
 
+export const createReviewForProfessor = async ({ userId, classId, difficulty, recommendation, comment }) => {
+  return await prisma.note.create({
+    data: {
+      userId,
+      classId,
+      difficulty,
+      recommendation,
+      comment,
+    },
+    include: {
+      user: { select: { id: true, name: true } },
+    },
+  });
+};
+
 export const createProfessor = async (data) => {
-  return await prisma.professor.create({ data });
+  return await prisma.professor.create({ data }); // Crea un nuevo profesor
 };
 
 export const updateProfessor = async (id, data) => {
-  return await prisma.professor.update({ where: { id }, data });
+  return await prisma.professor.update({ where: { id }, data }); // Actualiza un profesor existente
 };
 
 export const deleteProfessor = async (id) => {
-  return await prisma.professor.delete({ where: { id } });
+  return await prisma.professor.delete({ where: { id } }); // Elimina un profesor
 };

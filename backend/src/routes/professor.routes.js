@@ -1,4 +1,6 @@
+// src/routes/professor.routes.js
 import { Router } from "express";
+import { addReviewToProfessor } from "../controllers/professor.controller.js";
 import {
   getProfessors,
   getProfessor,
@@ -15,5 +17,7 @@ router.get("/:id", getProfessor);
 router.post("/", authMiddleware, adminMiddleware, createNewProfessor);
 router.put("/:id", authMiddleware, adminMiddleware, updateExistingProfessor);
 router.delete("/:id", authMiddleware, adminMiddleware, removeExistingProfessor);
+router.post("/:id/reviews", authMiddleware, addReviewToProfessor);
+
 
 export default router;

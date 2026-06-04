@@ -1,3 +1,4 @@
+// src/routes/note.routes.js
 import { Router } from "express";
 import {
   getNotes,

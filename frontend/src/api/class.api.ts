@@ -1,3 +1,5 @@
+// src/api/class.api.ts
+// Lógica de acceso a datos para clases: listado, detalle y semestres.
 import { client } from "./client";
 import type { ClassSummary, ClassDetail } from "./types";
 

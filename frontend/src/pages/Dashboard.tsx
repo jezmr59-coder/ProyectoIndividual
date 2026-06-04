@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { classApi } from "../api/class.api";
-import { subjectApi } from "../api/subject.api";
-import { professorApi } from "../api/professor.api";
-import { authApi } from "../api/auth.api";
-import type { ClassSummary, Subject, Professor } from "../api/types";
+﻿// src/pages/Dashboard.tsx
+// Página principal que muestra la lista de profesores, búsqueda y navegación al perfil.
+import { useState, useEffect } from "react"; // Hook para estado y efectos
+import { useNavigate } from "react-router-dom"; // Hook para navegar programáticamente
+import { professorApi } from "../api/professor.api"; // API para profesores
+import { authApi } from "../api/auth.api"; // API para autenticación
+import type { Professor } from "../api/types"; // Tipo de profesor
 
 function Flames({ value }: { value: number | null }) {
-  if (value === null) return <span style={{ color: "var(--text-muted)" }}>—</span>;
+  if (value === null) return <span style={{ color: "var(--text-muted)" }}>—</span>; // Muestra guión si no hay valor
   return (
     <span title={`Dificultad ${value.toFixed(1)}/5`}>
       {Array.from({ length: 5 }, (_, i) => (
@@ -20,8 +20,8 @@ function Flames({ value }: { value: number | null }) {
 }
 
 function Badge({ pct }: { pct: number | null }) {
-  if (pct === null) return <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>Sin reseñas</span>;
-  const good = pct >= 60;
+  if (pct === null) return <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>Sin reseñas</span>; // Muestra estado sin reseñas
+  const good = pct >= 60; // Determina si el profesor es recomendado
   return (
     <span style={{ color: good ? "var(--green-bright)" : "var(--red-bright)", fontFamily: "'Cinzel',serif", fontSize: "0.65rem", letterSpacing: "0.05em", textTransform: "uppercase" }}>
       {good ? "⚔ Recomendado" : "☠ Evitar"} <em style={{ fontStyle: "normal", opacity: 0.7 }}>{pct.toFixed(0)}%</em>
@@ -30,39 +30,26 @@ function Badge({ pct }: { pct: number | null }) {
 }
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const [classes, setClasses] = useState<ClassSummary[]>([]);
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [professors, setProfessors] = useState<Professor[]>([]);
-  const [semesters, setSemesters] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
-  const [filterSemester, setFilterSemester] = useState("");
-  const [filterSubject, setFilterSubject] = useState("");
-  const [filterProfessor, setFilterProfessor] = useState("");
+  const navigate = useNavigate(); // Navega entre páginas
+  const [professors, setProfessors] = useState<Professor[]>([]); // Lista de profesores
+  const [loading, setLoading] = useState(true); // Indicador de carga
+  const [error, setError] = useState<string | null>(null); // Estado de error
+  const [search, setSearch] = useState(""); // Término de búsqueda
 
   useEffect(() => {
-    Promise.all([classApi.getSemesters(), subjectApi.getAll(), professorApi.getAll()])
-      .then(([sem, subs, profs]) => { setSemesters(sem); setSubjects(subs); setProfessors(profs); })
-      .catch(() => {});
-  }, []);
+    professorApi.getAll()
+      .then(setProfessors) // Guarda los profesores en el estado
+      .catch((e) => setError(e.message)) // Captura error de carga
+      .finally(() => setLoading(false)); // Termina el estado de carga
+  }, []); // Solo al montar el componente
 
-  useEffect(() => {
-    setLoading(true);
-    classApi.getAll({ semester: filterSemester || undefined, professorId: filterProfessor || undefined, subjectId: filterSubject || undefined })
-      .then(setClasses)
-      .catch((e) => setError(e.message))
-      .finally(() => setLoading(false));
-  }, [filterSemester, filterProfessor, filterSubject]);
-
-  const filtered = classes.filter((c) => {
-    if (!search) return true;
+  const filtered = professors.filter((p) => {
+    if (!search) return true; // Si no hay búsqueda, muestra todos
     const q = search.toLowerCase();
-    return c.subject.name.toLowerCase().includes(q) || c.subject.code.toLowerCase().includes(q) || c.professor?.name?.toLowerCase().includes(q);
+    return p.name.toLowerCase().includes(q) || p.department.toLowerCase().includes(q); // Filtra por nombre o departamento
   });
 
-  const handleLogout = () => { authApi.logout(); navigate("/login"); };
+  const handleLogout = () => { authApi.logout(); navigate("/login"); }; // Cierra sesión y redirige
 
   return (
     <>
@@ -74,6 +61,11 @@ export default function Dashboard() {
         .nav-btn { font-family:"Cinzel",serif; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem 1rem; border:1px solid var(--border); background:transparent; color:var(--text-dim); transition:all 0.2s; cursor:pointer; }
         .nav-btn:hover { border-color:var(--gold-dim); color:var(--gold); }
         .nav-btn.danger:hover { border-color:var(--red-bright); color:var(--red-bright); }
+        .dash-secret { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:50%; background:transparent; color:var(--text-muted); font-size:1rem; cursor:pointer; transition:all 0.2s; opacity:0; pointer-events:none; }
+        .dash-nav:hover .dash-secret { opacity:1; pointer-events:auto; }
+        .dash-secret:hover { border-color:var(--gold-dim); color:var(--gold); background:rgba(255,215,0,0.08); }
+        .dash-secret { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); border-radius:50%; background:transparent; color:var(--text-muted); font-size:1rem; cursor:pointer; transition:all 0.2s; }
+        .dash-secret:hover { border-color:var(--gold-dim); color:var(--gold); background:rgba(255,215,0,0.08); }
 
         .dash-hero { text-align:center; padding:3.5rem 2rem 2.5rem; border-bottom:1px solid var(--border); }
         .dash-hero-eyebrow { font-family:"Cinzel",serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1rem; }
@@ -85,31 +77,26 @@ export default function Dashboard() {
         .dash-search { flex:1; min-width:180px; background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:"Crimson Text",serif; font-size:1rem; padding:0.55rem 0.9rem; outline:none; transition:border-color 0.2s; }
         .dash-search::placeholder { color:var(--text-muted); }
         .dash-search:focus { border-color:var(--gold-dim); }
-        .dash-select { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:"Crimson Text",serif; font-size:0.9rem; padding:0.55rem 0.9rem; outline:none; cursor:pointer; }
-        .dash-select:focus { border-color:var(--gold-dim); }
         .dash-count { font-family:"Cinzel",serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--text-muted); text-transform:uppercase; margin-left:auto; }
 
         .dash-content { max-width:1400px; margin:0 auto; padding:2rem; }
-        .classes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.5px; background:var(--border); border:1px solid var(--border); }
+        .professors-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.5px; background:var(--border); border:1px solid var(--border); }
 
-        .class-card { background:var(--surface); padding:1.5rem; cursor:pointer; transition:background 0.15s; position:relative; overflow:hidden; }
-        .class-card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--gold); transform:scaleY(0); transition:transform 0.2s; transform-origin:bottom; }
-        .class-card:hover { background:var(--surface2); }
-        .class-card:hover::before { transform:scaleY(1); }
+        .professor-card { background:var(--surface); padding:1.5rem; cursor:pointer; transition:background 0.15s; position:relative; overflow:hidden; }
+        .professor-card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--gold); transform:scaleY(0); transition:transform 0.2s; transform-origin:bottom; }
+        .professor-card:hover { background:var(--surface2); }
+        .professor-card:hover::before { transform:scaleY(1); }
 
-        .cc-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem; }
-        .cc-semester { font-family:"Cinzel",serif; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-dim); border:1px solid var(--gold-dim); padding:0.2rem 0.45rem; }
-        .cc-group { font-family:"Cinzel",serif; font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; }
-        .cc-subject { font-family:"Cinzel",serif; font-size:0.95rem; font-weight:600; color:var(--text); line-height:1.3; margin-bottom:0.2rem; }
-        .cc-code { font-size:0.82rem; color:var(--text-dim); margin-bottom:0.65rem; }
-        .cc-professor { font-size:0.9rem; color:var(--gold); margin-bottom:1.1rem; font-style:italic; }
-        .cc-stats { display:flex; flex-direction:column; gap:0.45rem; }
-        .cc-stat-row { display:flex; align-items:center; justify-content:space-between; }
-        .cc-stat-label { font-family:"Cinzel",serif; font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); }
-        .cc-footer { margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--text-muted); display:flex; justify-content:space-between; align-items:center; }
-        .cc-reviews { font-size:0.78rem; color:var(--text-muted); }
-        .cc-arrow { font-family:"Cinzel",serif; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); transition:color 0.15s; }
-        .class-card:hover .cc-arrow { color:var(--gold); }
+        .pc-name { font-family:"Cinzel",serif; font-size:1.1rem; font-weight:600; color:var(--text); line-height:1.3; margin-bottom:0.2rem; }
+        .pc-department { font-size:0.9rem; color:var(--gold); margin-bottom:1rem; font-style:italic; }
+        .pc-description { font-size:0.85rem; color:var(--text-dim); margin-bottom:1.1rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+        .pc-stats { display:flex; flex-direction:column; gap:0.45rem; }
+        .pc-stat-row { display:flex; align-items:center; justify-content:space-between; }
+        .pc-stat-label { font-family:"Cinzel",serif; font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); }
+        .pc-footer { margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--text-muted); display:flex; justify-content:space-between; align-items:center; }
+        .pc-reviews { font-size:0.78rem; color:var(--text-muted); }
+        .pc-arrow { font-family:"Cinzel",serif; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); transition:color 0.15s; }
+        .professor-card:hover .pc-arrow { color:var(--gold); }
 
         .state-box { text-align:center; padding:5rem 2rem; color:var(--text-dim); }
         .state-box h2 { font-family:"Cinzel",serif; font-size:1.1rem; color:var(--text-muted); margin-bottom:0.5rem; }
@@ -121,64 +108,58 @@ export default function Dashboard() {
       <nav className="dash-nav">
         <div className="dash-brand">Tec<span>Souls</span></div>
         <div className="dash-nav-actions">
+          <button className="dash-secret" onClick={() => navigate("/dominio-oculto")} title="Dominio oculto">🗃</button>
           <button className="nav-btn danger" onClick={handleLogout}>Salir</button>
         </div>
       </nav>
 
       <div className="dash-hero">
         <p className="dash-hero-eyebrow">Sistema de calificacion</p>
-        <h1 className="dash-hero-title">Conoce tu <em>destino academico</em></h1>
-        <p className="dash-hero-sub">Consejos de alumnos que sobrevivieron. Advertencias de los que no.</p>
+        <h1 className="dash-hero-title">Conoce a tus <em>profesores</em></h1>
+        <p className="dash-hero-sub">Descubre sus especialidades y lee las experiencias de otros estudiantes.</p>
       </div>
 
       <div className="dash-filters">
-        <input className="dash-search" placeholder="Buscar materia, codigo o profesor..." value={search} onChange={(e) => setSearch(e.target.value)} />
-        <select className="dash-select" value={filterSemester} onChange={(e) => setFilterSemester(e.target.value)}>
-          <option value="">Todos los semestres</option>
-          {semesters.map((s) => <option key={s} value={s}>{s}</option>)}
-        </select>
-        <select className="dash-select" value={filterSubject} onChange={(e) => setFilterSubject(e.target.value)}>
-          <option value="">Todas las materias</option>
-          {subjects.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-        </select>
-        <select className="dash-select" value={filterProfessor} onChange={(e) => setFilterProfessor(e.target.value)}>
-          <option value="">Todos los profesores</option>
-          {professors.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-        </select>
-        <span className="dash-count">{filtered.length} clases</span>
+        <input className="dash-search" placeholder="Buscar profesor o departamento..." value={search} onChange={(e) => setSearch(e.target.value)} />
+        <span className="dash-count">{filtered.length} profesores</span>
       </div>
 
       <div className="dash-content">
         {loading ? (
-          <div className="state-box"><div className="spinner" /><p>Consultando los pergaminos...</p></div>
+          <div className="state-box">
+            <div className="spinner"></div>
+            <h2>Cargando profesores...</h2>
+          </div>
         ) : error ? (
-          <div className="state-box"><h2>Error al cargar</h2><p>{error}</p></div>
+          <div className="state-box">
+            <h2>Error al cargar</h2>
+            <p>{error}</p>
+          </div>
         ) : filtered.length === 0 ? (
-          <div className="state-box"><h2>Ningun vestigio encontrado</h2><p>No hay clases que coincidan.</p></div>
+          <div className="state-box">
+            <h2>No se encontraron profesores</h2>
+            <p>Intenta con una búsqueda diferente.</p>
+          </div>
         ) : (
-          <div className="classes-grid">
-            {filtered.map((c) => (
-              <div key={c.id} className="class-card" onClick={() => navigate(`/classes/${c.id}`)}>
-                <div className="cc-header">
-                  <span className="cc-semester">{c.semester}</span>
-                  <span className="cc-group">Grupo {c.group}</span>
-                </div>
-                <div className="cc-subject">{c.subject.name}</div>
-                <div className="cc-code">{c.subject.code}</div>
-                <div className="cc-professor">{c.professor?.name ?? "Sin profesor"}</div>
-                <div className="cc-stats">
-                  <div className="cc-stat-row">
-                    <span className="cc-stat-label">Dificultad</span>
-                    <Flames value={c.avgDifficulty} />
+          <div className="professors-grid">
+            {filtered.map((prof) => (
+              <div key={prof.id} className="professor-card" onClick={() => navigate(`/professors/${prof.id}`)}>
+                <h3 className="pc-name">{prof.name}</h3>
+                <p className="pc-department">{prof.department}</p>
+                <p className="pc-description">{prof.description}</p>
+                <div className="pc-stats">
+                  <div className="pc-stat-row">
+                    <span className="pc-stat-label">Dificultad</span>
+                    <Flames value={prof.avgDifficulty} />
                   </div>
-                  <div className="cc-stat-row">
-                    <span className="cc-stat-label">Veredicto</span>
-                    <Badge pct={c.recommendPct} />
+                  <div className="pc-stat-row">
+                    <span className="pc-stat-label">Recomendación</span>
+                    <Badge pct={prof.recommendPct} />
                   </div>
                 </div>
-                <div className="cc-footer">
-                  <span className="cc-reviews">{c.totalReviews} {c.totalReviews === 1 ? "nota" : "notas"}</span>
-                  <span className="cc-arrow">Ver notas</span>
+                <div className="pc-footer">
+                  <span className="pc-reviews">{prof.totalReviews} reseñas</span>
+                  <span className="pc-arrow">VER →</span>
                 </div>
               </div>
             ))}

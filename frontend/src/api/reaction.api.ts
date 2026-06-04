@@ -1,3 +1,5 @@
+// src/api/reaction.api.ts
+// Endpoints para crear y consultar reacciones a notas existentes.
 import { client } from "./client";
 import type { Reaction } from "./types";
 

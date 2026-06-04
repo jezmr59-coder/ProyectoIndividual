@@ -1,3 +1,4 @@
+// src/services/class.service.js
 import prisma from "../config/prisma.js";
 
 const withStats = (c) => {

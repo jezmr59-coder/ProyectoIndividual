@@ -1,3 +1,7 @@
+// src/api/types.ts
+// Tipos compartidos entre frontend y llamadas de API.
+// Define las estructuras de datos que se envían y reciben desde el backend.
+
 // ── Auth ──────────────────────────────────────────────
 export interface User {
   id: string;
@@ -17,6 +21,7 @@ export interface Professor {
   id: string;
   name: string;
   department: string;
+  description: string;
   totalReviews: number;
   avgDifficulty: number | null;
   recommendPct: number | null;
@@ -68,4 +73,14 @@ export interface Reaction {
   userId: string;
   noteId: string;
   type: "USEFUL" | "NOT_USEFUL";
+}
+
+export interface UploadItem {
+  id: string;
+  originalName: string;
+  description: string;
+  fileUrl: string;
+  contentType: string;
+  size: number;
+  createdAt: string;
 }

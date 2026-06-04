@@ -1,26 +1,28 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { authApi } from "../api/auth.api";
+﻿// src/pages/Register.tsx
+// Página de registro de usuarios que envía datos al endpoint de registro.
+import { useState } from "react"; // Importa useState para manejar estado local
+import { useNavigate, Link } from "react-router-dom"; // Importa navegación y enlaces
+import { authApi } from "../api/auth.api"; // Importa API de autenticación
 
 export default function Register() {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Hook para redirigir rutas
+  const [name, setName] = useState(""); // Estado para nombre
+  const [email, setEmail] = useState(""); // Estado para correo
+  const [password, setPassword] = useState(""); // Estado para contraseña
+  const [error, setError] = useState<string | null>(null); // Estado para mensajes de error
+  const [loading, setLoading] = useState(false); // Estado para indicador de carga
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+    e.preventDefault(); // Evita recarga de página al enviar el formulario
+    setError(null); // Limpia el mensaje de error previo
+    setLoading(true); // Activa el spinner de carga
     try {
-      await authApi.register(name, email, password);
-      navigate("/dashboard");
+      await authApi.register(name, email, password); // Llama a la API para registrar al usuario
+      navigate("/dashboard"); // Redirige al dashboard al registrarse correctamente
     } catch (err: any) {
-      setError(err.message ?? "Error al registrarse");
+      setError(err.message ?? "Error al registrarse"); // Muestra el error recibido
     } finally {
-      setLoading(false);
+      setLoading(false); // Desactiva el spinner de carga
     }
   };
 

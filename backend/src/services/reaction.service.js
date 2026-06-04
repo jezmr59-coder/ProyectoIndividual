@@ -1,3 +1,4 @@
+// src/services/reaction.service.js
 import prisma from "../config/prisma.js";
 
 export const toggleReaction = async (userId, noteId, type) => {

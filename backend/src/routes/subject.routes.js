@@ -1,3 +1,4 @@
+// src/routes/subject.routes.js
 import { Router } from "express";
 import {
   getSubjects,

@@ -1,4 +1,9 @@
+// src/controllers/professor.controller.js
 import { createProfessorSchema, updateProfessorSchema } from "../Dtos/professor.dto.js";
+import { createReviewForProfessor } from "../services/professor.service.js";
+import { createReviewSchema } from "../Dtos/professor.dto.js";
+
+
 import {
   getAllProfessors,
   getProfessorById,
@@ -51,6 +56,17 @@ export const removeExistingProfessor = async (req, res, next) => {
   try {
     await deleteProfessor(req.params.id);
     res.json({ message: "Professor deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const addReviewToProfessor = async (req, res, next) => {
+  try {
+    const validatedData = createReviewSchema.parse(req.body);
+    const userId = req.user.id;
+    const review = await createReviewForProfessor({ userId, ...validatedData });
+    res.status(201).json(review);
   } catch (error) {
     next(error);
   }
