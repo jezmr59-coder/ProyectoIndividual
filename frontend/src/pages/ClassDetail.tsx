@@ -275,14 +275,14 @@ export default function ClassDetailPage() {
         .note-form { border:1px solid var(--border); background:var(--surface); padding:1.5rem; margin-top:1.5rem; }
         .nf-title { font-family:"Cinzel",serif; font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--text); }
         .nf-error { margin-bottom:1rem; color:var(--red-bright); }
-        .nf-row { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
-        .nf-field { flex:1; min-width:140px; display:flex; flex-direction:column; gap:0.45rem; }
+        .nf-row { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; align-items:flex-start; }
+        .nf-field { flex:1; min-width:140px; display:flex; flex-direction:column; gap:0.45rem; align-items:flex-start; }
         .nf-label { font-family:"Cinzel",serif; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); }
-        .nf-flames { display:flex; gap:0.4rem; }
-        .flame-btn { background:transparent; border:1px solid var(--border); color:var(--text-muted); font-size:0.9rem; padding:0.45rem 0.6rem; cursor:pointer; }
+        .nf-flames { display:flex; gap:0.4rem; align-items:center; }
+        .flame-btn { background:transparent; border:1px solid var(--border); color:var(--text-muted); font-size:0.9rem; padding:0.25rem 0.45rem; line-height:1; height:auto; min-width:34px; cursor:pointer; }
         .flame-btn.on { border-color:var(--gold); color:var(--gold); }
-        .nf-toggle { display:flex; gap:0.5rem; flex-wrap:wrap; }
-        .toggle-btn { flex:1 1 140px; min-width:0; border:1px solid var(--border); background:transparent; color:var(--text-muted); padding:0.6rem 0.9rem; cursor:pointer; }
+        .nf-toggle { display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; }
+        .toggle-btn { flex:0 0 auto; max-width:160px; border:1px solid var(--border); background:transparent; color:var(--text-muted); padding:0.45rem 0.8rem; cursor:pointer; white-space:nowrap; }
         .toggle-btn.active-good { border-color:var(--gold); color:var(--gold); }
         .toggle-btn.active-bad { border-color:var(--red-bright); color:var(--red-bright); }
         .nf-textarea { width:100%; min-height:100px; border:1px solid var(--border); background:var(--bg); color:var(--text); padding:0.75rem; resize:vertical; }
