@@ -56,17 +56,20 @@ export const getProfessorById = async (id) => {
   if (!professor) return null;
 
   const allNotes = professor.classes.flatMap((c) => c.notes); // Todos los comentarios de las clases
+  const stats = {
+    totalReviews: allNotes.length,
+    avgDifficulty: allNotes.length
+      ? allNotes.reduce((acc, n) => acc + n.difficulty, 0) / allNotes.length
+      : null,
+    recommendPct: allNotes.length
+      ? (allNotes.filter((n) => n.recommendation).length / allNotes.length) * 100
+      : null,
+  };
+
   return {
     ...professor,
-    stats: {
-      totalReviews: allNotes.length,
-      avgDifficulty: allNotes.length
-        ? allNotes.reduce((acc, n) => acc + n.difficulty, 0) / allNotes.length
-        : null,
-      recommendPct: allNotes.length
-        ? (allNotes.filter((n) => n.recommendation).length / allNotes.length) * 100
-        : null,
-    },
+    ...stats,
+    stats,
   };
 };
 
